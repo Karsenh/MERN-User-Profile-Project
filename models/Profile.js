@@ -111,3 +111,6 @@ const ProfileSchema = new mongoose.Schema({
         default: Date.now
       }
 });
+
+// Export to bring into our profile routes in order to query the database for manipulation.
+module.exports = Profile = mongoose.model('profile', ProfileSchema);
