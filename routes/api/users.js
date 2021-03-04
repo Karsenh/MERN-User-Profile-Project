@@ -12,7 +12,7 @@ const config = require('config');
 const {
     check,
     validationResult
-} = require('express-validator/check');
+} = require('express-validator');
 
 // Bring in our user model
 const User = require('../../models/User');

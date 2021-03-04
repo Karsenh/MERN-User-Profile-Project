@@ -4,10 +4,11 @@ const auth = require('../../middleware/auth');
 const {
     check,
     validationResult
-} = require('express-validator/check');
+} = require('express-validator');
 
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
+const { response } = require('express');
 
 
 /**
@@ -45,6 +46,7 @@ router.get('/me', auth, async (req, res) => {
  * 
  */
 router.post("/", auth,
+    // Check for body errors
     check('status', 'Status is required').not().isEmpty(),
     check('skills', 'Skills is requried').not().isEmpty(),
     async (req, res) => {
@@ -74,6 +76,48 @@ router.post("/", auth,
         const profileFields = {};
         profileFields.user = req.user.id;
         if(company) profileFields.company = company
+        if(website) profileFields.website = website
+        if(location) profileFields.location = location
+        if(bio) profileFields.bio = bio
+        if(status) profileFields.status = status
+        if(githubusername) profileFields.githubusername = githubusername
+        if (skills) {
+            profileFields.skills = skills.split(',').map(skill => skill.trim());
+        }
+
+        // Build social object
+        profileFields.social = {}
+        if (youtube) profileFields.social.youtube = youtube;
+        if (twitter) profileFields.social.twitter = twitter;
+        if (facebook) profileFields.social.facebook = facebook;
+        if (linkedin) profileFields.social.linkedin = linkedin;
+        if (instagram) profileFields.social.instagram = instagram;
+
+        try {
+            // Search for a user profile by id
+            let profile = await Profile.findOne({ user: req.user.id });
+
+            // If there is a profile...
+             if (profile) {
+                //  Update it
+                profile = await Profile.findOneAndUpdate({ user: req.user.id }, { $set: profileFields }, { new: true});
+                return res.json(profile);
+             }
+
+            //  If there is NOT a profile...
+            //  Create one
+            profile = new Profile(profileFields);
+
+            // Save the profile to database
+            await profile.save();
+
+            // Return profile json
+            res.json(profile);
+
+        } catch(err) {
+            console.error(err.message);
+            res.status(500).send('Server error!');
+        }
     }
 );
 
