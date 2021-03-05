@@ -163,5 +163,28 @@ router.get('/user/:user_id', async (req, res) => {
     }
 });
 
+/**
+ * @ROUTE   DELETE (API/profile)
+ * @desc    Delete profile, user, and posts
+ * @access  Private
+ * 
+ */
+// Add Auth middleware as this is a private route
+router.delete('/', auth, async (req, res) => {
+    try {
+        // Remove Users posts
+
+        // Remove user Profile
+        await Profile.findOneAndRemove({ user: req.user.id }); // We can access req.user.id since this is a protected route
+        // Remove User
+        await User.findOneAndRemove({ _id: req.user.id });
+
+        res.json({ msg: 'User deleted' });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error!');    
+    }
+});
+
 
 module.exports = router;
