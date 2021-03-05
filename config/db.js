@@ -16,7 +16,7 @@ const db = config.get('mongoURI');
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false })
+        await mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false });
         console.log('Successfully Connected to MongoDB!');
     } catch(err) {
         // If can't connect, show err...
