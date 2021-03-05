@@ -186,5 +186,61 @@ router.delete('/', auth, async (req, res) => {
     }
 });
 
+/**
+ * @ROUTE   PUT (API/profile/experience)
+ * @desc    Add profile experience
+ * @access  Private
+ * 
+ */
+router.put('/experience', [auth, [
+    check('title', 'Title is required').not().isEmpty(),
+    check('company', 'Company is required').not().isEmpty(),
+    check('from', 'From date is required').not().isEmpty()
+]], async (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    // Capture the data submitted in req.body in a new const variable
+    const { 
+        title,
+        company,
+        location,
+        from,
+        to,
+        current,
+        description
+    } = req.body;
+
+    // Create a new experience object with the submitted data from req.body
+    const newExp = {
+        title,
+        company,
+        location,
+        from,
+        to,
+        current,
+        description
+    }
+
+    try {
+        // Find the profile to add an experience to with the user.id from the JWT
+        const profile = await Profile.findOne({ user: req.user.id });
+
+        // Unshift or append to the front of the experience array the new experience.
+        profile.experience.unshift(newExp);
+
+        // Save the profile
+        await profile.save();
+
+        // Return the profile json
+        res.json(profile);
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error!');
+    }
+});
 
 module.exports = router;
