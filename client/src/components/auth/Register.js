@@ -50,7 +50,7 @@ export const Register = () => {
             name='email'
           />
           <small className='form-text'>
-            This site uses Gravatar so if you want a profile image, use a
+            This website uses Gravatar so if you want a profile image, use a
             Gravatar email
           </small>
         </div>
