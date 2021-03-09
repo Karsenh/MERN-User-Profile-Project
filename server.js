@@ -19,10 +19,12 @@ app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/posts', require('./routes/api/posts'));
 
 // Serve static assets in production on remote host
+// Check for production:
 if (process.env.NODE_ENV === 'production') {
-  // Set static folder
+  // Set static (public) folder using express -> index.html in client/build
   app.use(express.static('client/build'));
 
+  // Serve that index.html file within our public folder
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
