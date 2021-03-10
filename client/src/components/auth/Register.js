@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
+import GoogleLogin from 'react-google-login';
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -32,6 +33,12 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   if (isAuthenticated) {
     return <Redirect to='/dashboard' />;
   }
+
+  const responseGoogle = response => {
+    console.log(response);
+    console.log(response.profileObj);
+    console.log(response.profileObj.email);
+  };
 
   return (
     <Fragment>
@@ -88,6 +95,15 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
       <p className='my-1'>
         Already have an account? <Link to='/login'>Sign In</Link>
       </p>
+      <div>
+        <GoogleLogin
+          clientId='1046261655841-ngl3m82k1qvp4706k1364igkaqomcn36.apps.googleusercontent.com'
+          buttonText='Sign in with Google'
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+          cookiePolicy={'single_host_origin'}
+        />
+      </div>
     </Fragment>
   );
 };
