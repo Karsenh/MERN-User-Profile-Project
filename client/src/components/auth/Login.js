@@ -2,9 +2,13 @@ import React, { Fragment, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { login } from '../../actions/auth';
+// import { login } from '../../actions/auth';
+import { GoogleLogin } from 'react-google-login';
 
-export const Login = ({ login, isAuthenticated }) => {
+import { login, authGoogle } from '../../actions/auth';
+import { google } from '../../config';
+
+export const Login = ({ login, isAuthenticated, authGoogle }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -19,6 +23,14 @@ export const Login = ({ login, isAuthenticated }) => {
   const onSubmit = async e => {
     e.preventDefault();
     login(email, password);
+  };
+
+  const onSuccess = async googleData => {
+    authGoogle(googleData.tokenId);
+  };
+
+  const onFailure = res => {
+    console.log(res);
   };
 
   //   Redirect if logged in
@@ -57,6 +69,14 @@ export const Login = ({ login, isAuthenticated }) => {
       <p className='my-1'>
         Don't have an account? <Link to='/register'>Sign Up</Link>
       </p>
+      <GoogleLogin
+        clientId={google.GOOGLE_CLIEN_ID}
+        buttonText='Login with Google'
+        onSuccess={onSuccess}
+        onFailure={onFailure}
+        cookiePolicy={'single_host_origin'}
+        style={{ marginTop: '10px' }}
+      />
     </Fragment>
   );
 };
@@ -64,10 +84,11 @@ export const Login = ({ login, isAuthenticated }) => {
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  authGoogle: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login, authGoogle })(Login);

@@ -6,6 +6,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  GOOGLE_AUTH_SUCCESS,
+  GOOGLE_AUTH_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -32,6 +34,7 @@ export default function foo(state = initialState, action) {
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
+    case GOOGLE_AUTH_SUCCESS:
       // If token is there - set the token to the payload
       localStorage.setItem('token', payload.token);
       return {
@@ -44,6 +47,7 @@ export default function foo(state = initialState, action) {
     case REGISTER_FAIL:
     case AUTH_ERROR:
     case LOGIN_FAIL:
+    case GOOGLE_AUTH_FAIL:
     case LOGOUT:
       // Remove token entirely in the event of a failed login for whatever reason
       // Clears auth state and token from local storage

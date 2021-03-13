@@ -8,3 +8,5 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
+export const GOOGLE_AUTH_SUCCESS = 'GOOGLE_AUTH_SUCCESS';
+export const GOOGLE_AUTH_FAIL = 'GOOGLE_AUTH_FAIL';

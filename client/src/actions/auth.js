@@ -1,4 +1,5 @@
 import axios from 'axios';
+import setAuthToken from '../utils/setAuthToken';
 import { setAlert } from './alert';
 import {
   REGISTER_SUCCESS,
@@ -8,8 +9,9 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  GOOGLE_AUTH_SUCCESS,
+  GOOGLE_AUTH_FAIL,
 } from './types';
-import setAuthToken from '../utils/setAuthToken';
 
 // Load User
 export const loadUser = () => async dispatch => {
@@ -63,6 +65,40 @@ export const register = ({ name, email, password }) => async dispatch => {
     dispatch({
       // Dispatch registration fail from auth.js (reducers)
       type: REGISTER_FAIL,
+    });
+  }
+};
+
+// Authenticate with Google
+export const authGoogle = token => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  // Prepare data to send
+  const body = JSON.stringify({ token });
+
+  try {
+    const res = await axios.post('/api/auth/google', body, config);
+    dispatch({
+      // Dispatch registration success from auth.js (reducers) switch
+      type: GOOGLE_AUTH_SUCCESS,
+      payload: res.data,
+    });
+
+    dispatch(loadUser());
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      // Dispatch registration fail from auth.js (reducers)
+      type: GOOGLE_AUTH_FAIL,
     });
   }
 };

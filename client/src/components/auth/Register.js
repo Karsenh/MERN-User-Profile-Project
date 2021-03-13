@@ -1,12 +1,13 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
+import { GoogleLogin } from 'react-google-login';
 import { setAlert } from '../../actions/alert';
-import { register } from '../../actions/auth';
+import { register, authGoogle } from '../../actions/auth';
 import PropTypes from 'prop-types';
-import GoogleLogin from 'react-google-login';
+import { google } from '../../config';
 
-const Register = ({ setAlert, register, isAuthenticated }) => {
+const Register = ({ setAlert, register, isAuthenticated, authGoogle }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -30,15 +31,17 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     }
   };
 
+  const onSuccess = async googleData => {
+    authGoogle(googleData.tokenId);
+  };
+
+  const onFailure = res => {
+    console.log(res);
+  };
+
   if (isAuthenticated) {
     return <Redirect to='/dashboard' />;
   }
-
-  const responseGoogle = response => {
-    console.log(response);
-    console.log(response.profileObj);
-    console.log(response.profileObj.email);
-  };
 
   return (
     <Fragment>
@@ -97,11 +100,12 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
       </p>
       <div>
         <GoogleLogin
-          clientId='1046261655841-ngl3m82k1qvp4706k1364igkaqomcn36.apps.googleusercontent.com'
-          buttonText='Sign in with Google'
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
+          clientId={google.GOOGLE_CLIEN_ID}
+          buttonText='Login with Google'
+          onSuccess={onSuccess}
+          onFailure={onFailure}
           cookiePolicy={'single_host_origin'}
+          style={{ marginTop: '10px' }}
         />
       </div>
     </Fragment>
@@ -111,6 +115,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
+  authGoogle: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
 };
 
@@ -118,4 +123,6 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { setAlert, register })(Register);
+export default connect(mapStateToProps, { setAlert, register, authGoogle })(
+  Register
+);
