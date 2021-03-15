@@ -139,6 +139,7 @@ img {
   margin-right: 1.5rem;
   transition: opacity 0.1s ease-in;
   outline: none;
+  height: 3rem;
 }
 
 .badge {
