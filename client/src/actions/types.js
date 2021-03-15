@@ -10,3 +10,5 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const GOOGLE_AUTH_SUCCESS = 'GOOGLE_AUTH_SUCCESS';
 export const GOOGLE_AUTH_FAIL = 'GOOGLE_AUTH_FAIL';
+export const GET_PROFILE = 'GET_PROFILE';
+export const PROFILE_ERROR = 'PROFILE_ERROR';
