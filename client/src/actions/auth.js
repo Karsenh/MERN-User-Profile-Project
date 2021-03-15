@@ -11,6 +11,7 @@ import {
   LOGOUT,
   GOOGLE_AUTH_SUCCESS,
   GOOGLE_AUTH_FAIL,
+  CLEAR_PROFILE,
 } from './types';
 
 // Load User
@@ -142,5 +143,6 @@ export const login = (email, password) => async dispatch => {
 
 // Logout & Clear Profile
 export const logout = () => dispatch => {
+  dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: LOGOUT });
 };
