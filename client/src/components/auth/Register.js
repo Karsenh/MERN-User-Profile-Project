@@ -45,68 +45,70 @@ const Register = ({ setAlert, register, isAuthenticated, authGoogle }) => {
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Sign Up</h1>
-      <p className='lead'>
-        <i className='fas fa-user'></i> Create Your Account
-      </p>
-      <form className='form' onSubmit={e => onSubmit(e)}>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Name'
-            name='name'
-            value={name}
-            onChange={e => onChange(e)}
-            // required
+      <div className='mid-container'>
+        <h1 className='large text-primary'>Sign Up</h1>
+        <p className='lead'>
+          <i className='fas fa-user'></i> Create Your Account
+        </p>
+        <form className='form' onSubmit={e => onSubmit(e)}>
+          <div className='form-group'>
+            <input
+              type='text'
+              placeholder='Name'
+              name='name'
+              value={name}
+              onChange={e => onChange(e)}
+              // required
+            />
+          </div>
+          <div className='form-group'>
+            <input
+              type='email'
+              placeholder='Email Address'
+              value={email}
+              onChange={e => onChange(e)}
+              name='email'
+            />
+            <small className='form-text'>
+              This website uses Gravatar so if you want a profile image, use a
+              Gravatar email
+            </small>
+          </div>
+          <div className='form-group'>
+            <input
+              type='password'
+              placeholder='Password'
+              name='password'
+              value={password}
+              onChange={e => onChange(e)}
+              // minLength='6'
+            />
+          </div>
+          <div className='form-group'>
+            <input
+              type='password'
+              placeholder='Confirm Password'
+              name='password2'
+              value={password2}
+              onChange={e => onChange(e)}
+              // minLength='6'
+            />
+          </div>
+          <input type='submit' className='btn btn-primary' value='Register' />
+        </form>
+        <p className='my-1'>
+          Already have an account? <Link to='/login'>Sign In</Link>
+        </p>
+        <div>
+          <GoogleLogin
+            clientId={google.GOOGLE_CLIEN_ID}
+            buttonText='Login with Google'
+            onSuccess={onSuccess}
+            onFailure={onFailure}
+            cookiePolicy={'single_host_origin'}
+            style={{ marginTop: '10px' }}
           />
         </div>
-        <div className='form-group'>
-          <input
-            type='email'
-            placeholder='Email Address'
-            value={email}
-            onChange={e => onChange(e)}
-            name='email'
-          />
-          <small className='form-text'>
-            This website uses Gravatar so if you want a profile image, use a
-            Gravatar email
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='password'
-            placeholder='Password'
-            name='password'
-            value={password}
-            onChange={e => onChange(e)}
-            // minLength='6'
-          />
-        </div>
-        <div className='form-group'>
-          <input
-            type='password'
-            placeholder='Confirm Password'
-            name='password2'
-            value={password2}
-            onChange={e => onChange(e)}
-            // minLength='6'
-          />
-        </div>
-        <input type='submit' className='btn btn-primary' value='Register' />
-      </form>
-      <p className='my-1'>
-        Already have an account? <Link to='/login'>Sign In</Link>
-      </p>
-      <div>
-        <GoogleLogin
-          clientId={google.GOOGLE_CLIEN_ID}
-          buttonText='Login with Google'
-          onSuccess={onSuccess}
-          onFailure={onFailure}
-          cookiePolicy={'single_host_origin'}
-          style={{ marginTop: '10px' }}
-        />
       </div>
     </Fragment>
   );
