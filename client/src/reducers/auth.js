@@ -8,6 +8,7 @@ import {
   LOGOUT,
   GOOGLE_AUTH_SUCCESS,
   GOOGLE_AUTH_FAIL,
+  ACCOUNT_DELETED,
 } from '../actions/types';
 
 const initialState = {
@@ -49,6 +50,7 @@ export default function foo(state = initialState, action) {
     case LOGIN_FAIL:
     case GOOGLE_AUTH_FAIL:
     case LOGOUT:
+    case ACCOUNT_DELETED:
       // Remove token entirely in the event of a failed login for whatever reason
       // Clears auth state and token from local storage
       localStorage.removeItem('token');

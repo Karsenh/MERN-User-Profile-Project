@@ -134,7 +134,7 @@ img {
   margin: 1rem 0;
 }
 .my-2 {
-  margin: 2rem 0;
+  margin: 4rem 0 2rem;
 }
 .my-3 {
   margin: 3rem 0;
@@ -152,6 +152,7 @@ img {
   transition: opacity 0.1s ease-in;
   outline: none;
   height: 3rem;
+  border-radius: 50px;
 }
 
 .badge {
@@ -177,7 +178,6 @@ img {
 .alert-primary {
   background: var(--primary-color);
   color: #fff;
-  border-radius: 50px;
 }
 
 .btn-light,
@@ -186,7 +186,6 @@ img {
 .alert-light {
   background: var(--light-color);
   color: #333;
-  border-radius: 50px;
 }
 
 .btn-dark,
@@ -581,7 +580,7 @@ button {
   .dash-buttons a {
     display: block;
     width: 100%;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.5rem;
   }
 
   .post {

@@ -7,6 +7,7 @@ const { check, validationResult, body } = require('express-validator');
 
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
+const Post = require('../../models/Post');
 const { response } = require('express');
 
 /**
@@ -175,7 +176,7 @@ router.get('/user/:user_id', async (req, res) => {
 router.delete('/', auth, async (req, res) => {
   try {
     // Remove Users posts
-
+    await Post.deleteMany({ user: req.user.id });
     // Remove user Profile
     await Profile.findOneAndRemove({ user: req.user.id }); // We can access req.user.id since this is a protected route
     // Remove User
