@@ -81,7 +81,8 @@ img {
 .text-primary {
   color: var(--primary-color);
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
 .text-dark {
@@ -186,6 +187,11 @@ img {
 .alert-light {
   background: var(--light-color);
   color: #333;
+}
+
+.custom-light-btn{
+  padding-top: 0rem;
+  padding-bottom: 2rem;
 }
 
 .btn-dark,

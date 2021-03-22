@@ -12,7 +12,7 @@ import {
 } from './types';
 
 // Get current users profile
-export const getCurrentProfile = () => async (dispatch) => {
+export const getCurrentProfile = () => async dispatch => {
   try {
     const res = await axios.get('/api/profile/me');
 
@@ -32,7 +32,7 @@ export const getCurrentProfile = () => async (dispatch) => {
 };
 
 // Get all profiles
-export const getProfiles = () => async (dispatch) => {
+export const getProfiles = () => async dispatch => {
   dispatch({ type: CLEAR_PROFILE });
 
   try {
@@ -54,9 +54,9 @@ export const getProfiles = () => async (dispatch) => {
 };
 
 // Get profile by ID
-export const getProfileById = (userId) => async (dispatch) => {
+export const getProfileById = userId => async dispatch => {
   try {
-    const res = await axios.get(`/api/profile/${userId}`);
+    const res = await axios.get(`/api/profile/user/${userId}`);
 
     dispatch({
       type: GET_PROFILE,
@@ -74,7 +74,7 @@ export const getProfileById = (userId) => async (dispatch) => {
 };
 
 // Get GitHub repos
-export const getGitHubRepos = (username) => async (dispatch) => {
+export const getGitHubRepos = username => async dispatch => {
   try {
     const res = await axios.get(`/api/profile/github/${username}`);
 
@@ -94,9 +94,11 @@ export const getGitHubRepos = (username) => async (dispatch) => {
 };
 
 // Create or update user profile
-export const createProfile = (formData, history, edit = false) => async (
-  dispatch
-) => {
+export const createProfile = (
+  formData,
+  history,
+  edit = false
+) => async dispatch => {
   try {
     const config = {
       headers: {
@@ -123,7 +125,7 @@ export const createProfile = (formData, history, edit = false) => async (
     const errors = err.response.data.errors;
 
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
 
     dispatch({
@@ -137,7 +139,7 @@ export const createProfile = (formData, history, edit = false) => async (
 };
 
 // Add Experience
-export const addExperience = (formData, history) => async (dispatch) => {
+export const addExperience = (formData, history) => async dispatch => {
   try {
     const config = {
       headers: {
@@ -161,7 +163,7 @@ export const addExperience = (formData, history) => async (dispatch) => {
     const errors = err.response.data.errors;
 
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
 
     dispatch({
@@ -175,7 +177,7 @@ export const addExperience = (formData, history) => async (dispatch) => {
 };
 
 // Add Education
-export const addEducation = (formData, history) => async (dispatch) => {
+export const addEducation = (formData, history) => async dispatch => {
   try {
     const config = {
       headers: {
@@ -200,7 +202,7 @@ export const addEducation = (formData, history) => async (dispatch) => {
     const errors = err.response.data.errors;
 
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
 
     dispatch({
@@ -214,7 +216,7 @@ export const addEducation = (formData, history) => async (dispatch) => {
 };
 
 // Delete Experience - req to profile/experience with ID
-export const deleteExperience = (id) => async (dispatch) => {
+export const deleteExperience = id => async dispatch => {
   try {
     const res = await axios.delete(`/api/profile/experience/${id}`);
 
@@ -236,7 +238,7 @@ export const deleteExperience = (id) => async (dispatch) => {
 };
 
 // Delete Education - req to profile/experience with ID
-export const deleteEducation = (id) => async (dispatch) => {
+export const deleteEducation = id => async dispatch => {
   try {
     const res = await axios.delete(`/api/profile/education/${id}`);
 
@@ -258,14 +260,14 @@ export const deleteEducation = (id) => async (dispatch) => {
 };
 
 // Delete account and profile
-export const deleteAccount = () => async (dispatch) => {
+export const deleteAccount = () => async dispatch => {
   if (
     window.confirm(
       `Are you sure you want to delete your account? There's no going back!`
     )
   ) {
     try {
-      const res = await axios.delete('/api/profile');
+      await axios.delete('/api/profile');
 
       dispatch({ type: CLEAR_PROFILE });
       dispatch({ type: ACCOUNT_DELETED });
