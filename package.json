@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Karsenh/MERN-User-Profile-Project#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.3",
     "dotenv": "^8.2.0",
