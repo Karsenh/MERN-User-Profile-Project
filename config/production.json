@@ -1,8 +1,0 @@
-{
-    "mongoURI": "mongodb+srv://admin-Karsen:Karsen1212@devconnector.2rxhx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    "jwtSecret": "mysecrettoken",
-    "githubClientId": "594da2ecc9c3c980495c",
-    "githubSecret": "0b8c968265a803c332b77a905ce9e3e28291ebe4",
-    "googleClientID": "1046261655841-ngl3m82k1qvp4706k1364igkaqomcn36.apps.googleusercontent.com",
-    "githubToken": "b6859916dfc4ce2b13763288ac022cec4cd2da7d"
-} 
