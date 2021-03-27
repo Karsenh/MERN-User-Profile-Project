@@ -603,9 +603,9 @@ body::-webkit-scrollbar{
   width: 8px;
 }
 body::-webkit-scrollbar-thumb{
-  background-color: #5dffd5;
+  background-color: #4bade6;
   border-radius: 50px;
 }
 body::-webkit-scrollbar-track{
-  background-color: #278169;
+  background-color: #296f97;
 }
