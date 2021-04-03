@@ -8,30 +8,27 @@ import { register, authGoogle } from '../../actions/auth';
 import PropTypes from 'prop-types';
 import { google } from '../../config';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
-import App from './TOS'
+import App from './TOS';
 import { Modal, Button } from 'antd';
-import 'antd/dist/antd.css'
-
+import 'antd/dist/antd.css';
 
 const Register = ({ setAlert, register, isAuthenticated, authGoogle }) => {
-
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isVerified,setIsVerified]=useState(false);
-  const [isChecked,setIsChecked]=useState(false);
+  const [isVerified, setIsVerified] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     password2: '',
   });
-  
+
   const showModal = () => {
     setIsModalVisible(true);
   };
   const handleOk = () => {
     setIsChecked(true);
     setIsModalVisible(false);
-    
   };
 
   const handleCancel = () => {
@@ -41,20 +38,19 @@ const Register = ({ setAlert, register, isAuthenticated, authGoogle }) => {
   const { name, email, password, password2 } = formData;
 
   //   Use onChange for all field target names
- 
+
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  const verifyCallback=(response)=>{
-    if(response){
-      setIsVerified(true)
+  const verifyCallback = response => {
+    if (response) {
+      setIsVerified(true);
     }
-
-  }
+  };
   const onSubmit = async e => {
     e.preventDefault();
     if (password !== password2) {
-      if(!isVerified){
-        setAlert("please Verify")
+      if (!isVerified) {
+        setAlert('please Verify');
       }
       //   props.setAlert('Passwords do not match!', 'danger');
       setAlert('Passwords do not match!', 'danger');
@@ -62,9 +58,9 @@ const Register = ({ setAlert, register, isAuthenticated, authGoogle }) => {
       register({ name, email, password });
     }
   };
-  const callback=()=>{
-    console.log("recaptacha loaded")
-  }
+  const callback = () => {
+    console.log('recaptacha loaded');
+  };
   const onSuccess = async googleData => {
     authGoogle(googleData.tokenId);
   };
@@ -72,15 +68,12 @@ const Register = ({ setAlert, register, isAuthenticated, authGoogle }) => {
   const onFailure = res => {
     console.log(res);
   };
- 
 
   if (isAuthenticated) {
     return <Redirect to='/dashboard' />;
   }
-  
 
   return (
-    
     <Fragment>
       <div className='mid-container'>
         <h1 className='large text-primary'>Sign Up</h1>
@@ -131,22 +124,20 @@ const Register = ({ setAlert, register, isAuthenticated, authGoogle }) => {
               // minLength='6'
             />
           </div>
-         
+
           <div className='form-group'>
-            <Checkbox onClick={showModal} checked={isChecked}
-            
-            >I Accept the Privacy Policy and TOS</Checkbox>
-            
+            <Checkbox onClick={showModal} checked={isChecked}>
+              I Accept the Privacy Policy and TOS
+            </Checkbox>
           </div>
           <div className='form-group'>
-          <Recaptcha
-           sitekey="6LdOVZkaAAAAAAYYnFdtc00IrZJ86TC0GGJ9h1I2"
-            render="explicit"
-             onloadCallback={()=>callback()}
-              verifyCallback={()=>verifyCallback()}
+            <Recaptcha
+              sitekey='6LeIOJoaAAAAAAWJ1X8VCs-2Y74DVn6f1c1yrBcX'
+              render='explicit'
+              onloadCallback={() => callback()}
+              verifyCallback={() => verifyCallback()}
             />
           </div>
-         
 
           <input type='submit' className='btn btn-primary' value='Register' />
         </form>
@@ -164,13 +155,17 @@ const Register = ({ setAlert, register, isAuthenticated, authGoogle }) => {
           />
         </div>
       </div>
-      <Modal title="Terms & Condition" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal
+        title='Terms & Condition'
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>
       </Modal>
     </Fragment>
-    
   );
 };
 
