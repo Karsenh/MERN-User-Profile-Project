@@ -1,5 +1,8 @@
 import React from 'react';
+import 'antd/dist/antd.css';
 import PropTypes from 'prop-types';
+import { CheckCircleTwoTone } from '@ant-design/icons';
+import { Badge } from 'antd';
 
 const ProfileTop = ({
   profile: {
@@ -13,7 +16,14 @@ const ProfileTop = ({
 }) => (
   <div class='profile-top bg-primary p-2'>
     <img class='round-img my-1' src={avatar} alt='' />
-    <h1 class='large'>{name}</h1>
+    <h1 class='large'>
+      {name}{' '}
+      <Badge
+        size='default'
+        count={<CheckCircleTwoTone twoToneColor='#52c41a' />}
+      />
+    </h1>
+
     <p class='lead'>
       {status} at {company && <span>{company}</span>}
     </p>
